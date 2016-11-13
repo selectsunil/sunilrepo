@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Oracle JAX-WS 2.1.5. --><wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:odi="xmlns.oracle.com/odi/OdiInvoke/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="xmlns.oracle.com/odi/OdiInvoke/">
+	<wsdl:types>
+		<xsd:schema xmlns="xmlns.oracle.com/odi/OdiInvoke/" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="xmlns.oracle.com/odi/OdiInvoke/">
+			<xsd:element name="OdiStartScenResponse" type="OdiStartType"/>
+			<xsd:element name="OdiStartScenRequest">
+				<xsd:complexType>
+					<xsd:all>
+						<xsd:element minOccurs="1" name="Credentials" type="OdiCredentialType"/>
+						<xsd:element minOccurs="1" name="Request" type="ScenarioRequestType"/>
+					</xsd:all>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="OdiStartScenWithCallbackRequest">
+				<xsd:complexType>
+					<xsd:all>
+						<xsd:element minOccurs="1" name="Credentials" type="OdiCredentialType"/>
+						<xsd:element minOccurs="1" name="Request" type="ScenarioRequestType"/>
+
+					</xsd:all>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="OdiRestartSessRequest">
+				<xsd:complexType>
+					<xsd:all>
+						<xsd:element minOccurs="1" name="Credentials" type="OdiCredentialType"/>
+						<xsd:element minOccurs="1" name="Request" type="SessionRequestType"/>
+					</xsd:all>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="OdiRestartSessWithCallbackRequest">
+				<xsd:complexType>
+					<xsd:all>
+						<xsd:element minOccurs="1" name="Credentials" type="OdiCredentialType"/>
+						<xsd:element minOccurs="1" name="Request" type="SessionRequestType"/>
+					</xsd:all>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:complexType name="ScenarioRequestType">
+				<xsd:sequence>
+					<xsd:element name="ScenarioName" type="xsd:string"/>
+					<xsd:element name="ScenarioVersion" type="xsd:string"/>
+					<xsd:element name="Context" type="xsd:string"/>
+					<xsd:element default="true" minOccurs="0" name="Synchronous" type="xsd:boolean"/>
+					<xsd:element minOccurs="0" name="SessionName" type="xsd:string"/>
+					<xsd:element minOccurs="0" name="Keywords" type="xsd:string"/>
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="Variables" type="VariableType"/>
+					<xsd:element default="5" maxOccurs="1" minOccurs="0" name="LogLevel" type="xsd:int"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="SessionRequestType">
+				<xsd:sequence>
+					<xsd:element default="true" minOccurs="0" name="Synchronous" type="xsd:boolean"/>
+					<xsd:element minOccurs="1" name="SessionId" type="xsd:long"/>
+					<xsd:element default="true" minOccurs="0" name="KeepVariables" type="xsd:boolean"/>
+					<xsd:element minOccurs="0" name="LogLevel" type="xsd:int"/>
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="Variables" type="VariableType"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="VariableType">
+				<xsd:all>
+					<xsd:element name="Name" type="xsd:string"/>
+					<xsd:element name="Value" type="xsd:string"/>
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:element name="getWebServiceVersionRequest">
+				<xsd:complexType/>
+			</xsd:element>
+			<xsd:element name="getWebServiceVersionResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="version" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:complexType name="OdiStartType">
+				<xsd:annotation>
+					<xsd:documentation>
+						Ack message for OdiStartX request
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element name="Session" type="xsd:long">
+						<xsd:annotation>
+							<xsd:documentation>
+								id of executed session
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="OdiRestartSessResponse" type="OdiStartType">
+			</xsd:element>
+			
+			<xsd:complexType name="OdiCredentialType">
+				<xsd:all>
+					<xsd:element maxOccurs="1" minOccurs="0" name="OdiUser" type="xsd:string">
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="0" name="OdiPassword" type="xsd:string">
+					</xsd:element>
+					<xsd:element name="WorkRepository" type="xsd:string"/>
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:element name="OdiGetSessionsStatusRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="1" name="Credentials" type="OdiCredentialType">
+						</xsd:element>
+						<xsd:element maxOccurs="unbounded" minOccurs="0" name="SessionIds" type="xsd:long">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="OdiGetSessionsStatusResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" minOccurs="0" name="SessionStatusResponse" type="SessionStatusType">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+
+			<xsd:complexType name="SessionStatusType">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="SessionId" type="xsd:long">
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="1" name="SessionStatus" type="xsd:string">
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="0" name="SessionReturnCode" type="xsd:string">
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="0" name="SessionMessage" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="OdiStartLoadPlanRequest">
+				<xsd:complexType>
+                    <xsd:all>
+                    	<xsd:element maxOccurs="1" minOccurs="1" name="Credentials" type="OdiCredentialType"/>
+                    	<xsd:element name="StartLoadPlanRequest" type="StartLoadPlanRequestType"/>
+                    </xsd:all>
+                    
+				</xsd:complexType>
+			</xsd:element>
+		
+			<xsd:complexType name="StartLoadPlanRequestType">
+				<xsd:sequence maxOccurs="1" minOccurs="1">
+					<xsd:element maxOccurs="1" minOccurs="1" name="LoadPlanName" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Context" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="Keywords" type="xsd:string"/>
+					<xsd:element minOccurs="0" name="LogLevel" type="xsd:int"/>
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="LoadPlanStartupParameters" type="VariableType"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="OdiStopLoadPlanRequest">
+				<xsd:complexType>
+                    <xsd:all>
+                    	<xsd:element name="Credentials" type="OdiCredentialType"/>
+                    	<xsd:element name="OdiStopLoadPlanRequest" type="StopLoadPlanRequestType"/>
+                    </xsd:all>
+                    
+				</xsd:complexType>
+			</xsd:element>
+		
+			<xsd:complexType name="StopLoadPlanRequestType">
+				<xsd:sequence maxOccurs="1" minOccurs="1">
+					<xsd:element maxOccurs="1" minOccurs="1" name="LoadPlanInstanceId" type="xsd:long"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="LoadPlanInstanceRunCount" type="xsd:long"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="StopLevel" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="OdiRestartLoadPlanRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="1" name="Credentials" type="OdiCredentialType"/>
+						<xsd:element maxOccurs="1" minOccurs="1" name="RestartLoadPlanRequest" type="RestartLoadPlanRequestType"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		
+			<xsd:complexType name="RestartLoadPlanRequestType">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="LoadPlanInstanceId" type="xsd:long"/>
+					<xsd:element minOccurs="0" name="LogLevel" type="xsd:int"/>
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:element name="OdiStartLoadPlanResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="1" name="executionInfo" type="OdiStartLoadPlanType"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		
+			<xsd:complexType name="OdiLoadPlanInstanceRunInformationType">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="OdiLoadPlanInstanceId" type="xsd:long">
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="1" name="RunCount" type="xsd:long">
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="1" name="MasterRepositoryId" type="xsd:int">
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="1" name="MasterRepositoryTimestamp" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:complexType>
+		
+			<xsd:complexType name="OdiStartLoadPlanType">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="StartedRunInformation" type="OdiLoadPlanInstanceRunInformationType"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="OdiStopLoadPlanResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="executionInfo" type="OdiStopLoadPlanType"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		
+			<xsd:complexType name="OdiStopLoadPlanType">
+				<xsd:sequence>
+					<xsd:element name="StoppedRunInformation" type="OdiLoadPlanInstanceRunInformationType"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="OdiRestartLoadPlanResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="1" name="executionInfo" type="odiRestartLoadPlanType"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		
+			<xsd:complexType name="odiRestartLoadPlanType">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="StartedRunInformation" type="OdiLoadPlanInstanceRunInformationType"/>
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:element name="OdiGetLoadPlanStatusRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="1" name="Credentials" type="OdiCredentialType">
+						</xsd:element>
+						<xsd:element maxOccurs="unbounded" minOccurs="0" name="LoadPlans" type="LoadPlanStatusRequestType">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+
+			<xsd:complexType name="LoadPlanStatusRequestType">
+				<xsd:sequence>
+					<xsd:element name="LoadPlanInstanceId" type="xsd:long"/>
+					<xsd:element name="LoadPlanRunNumber" type="xsd:long"/>
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:element name="OdiGetLoadPlanStatusResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" minOccurs="0" name="LoadPlanStatusResponse" type="LoadPlanStatusType">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+
+			<xsd:complexType name="LoadPlanStatusType">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="LoadPlanInstanceId" type="xsd:long">
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="1" name="LoadPlanRunNumber" type="xsd:long">
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="1" name="LoadPlanStatus" type="xsd:string">
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="0" name="LoadPlanReturnCode" type="xsd:string">
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="0" name="LoadPlanMessage" type="xsd:string">
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="getWebServiceVersionRequest">
+		<wsdl:part element="odi:getWebServiceVersionRequest" name="part1"/>
+	</wsdl:message>
+	<wsdl:message name="getWebServiceVersionResponse">
+		<wsdl:part element="odi:getWebServiceVersionResponse" name="part1"/>
+	</wsdl:message>
+	<wsdl:message name="invokeStartScenRequest">
+		<wsdl:part element="odi:OdiStartScenRequest" name="part1"/>
+	</wsdl:message>
+	<wsdl:message name="invokeStartScenWithCallbackRequest">
+		<wsdl:part element="odi:OdiStartScenWithCallbackRequest" name="part1"/>
+	</wsdl:message>
+	<wsdl:message name="invokeStartScenResponse">
+		<wsdl:part element="odi:OdiStartScenResponse" name="part1"/>
+	</wsdl:message>
+	<wsdl:message name="invokeStartScenCallbackResponse">
+		<wsdl:part element="odi:OdiStartScenResponse" name="part1"/>
+	</wsdl:message>
+	<wsdl:message name="invokeRestartSessRequest">
+		<wsdl:part element="odi:OdiRestartSessRequest" name="part1"/>
+	</wsdl:message>
+	<wsdl:message name="invokeRestartSessWithCallbackRequest">
+		<wsdl:part element="odi:OdiRestartSessWithCallbackRequest" name="part1"/>
+	</wsdl:message>
+	<wsdl:message name="invokeRestartSessResponse">
+		<wsdl:part element="odi:OdiRestartSessResponse" name="part1"/>
+	</wsdl:message>
+	<wsdl:message name="invokeRestartSessCallbackResponse">
+		<wsdl:part element="odi:OdiRestartSessResponse" name="part1"/>
+	</wsdl:message>
+	<wsdl:message name="getSessionStatusRequest">
+		<wsdl:part element="odi:OdiGetSessionsStatusRequest" name="part1"/>
+	</wsdl:message>
+	<wsdl:message name="getSessionStatusResponse">
+		<wsdl:part element="odi:OdiGetSessionsStatusResponse" name="part1"/>
+	</wsdl:message>
+	<wsdl:message name="InvokeStartLoadPlanRequest">
+		<wsdl:part element="odi:OdiStartLoadPlanRequest" name="part1"/>
+	</wsdl:message>
+	<wsdl:message name="InvokeStopLoadPlanRequest">
+		<wsdl:part element="odi:OdiStopLoadPlanRequest" name="part1"/>
+	</wsdl:message>
+	<wsdl:message name="invokeRestartLoadPlanRequest">
+		<wsdl:part element="odi:OdiRestartLoadPlanRequest" name="part1"/>
+	</wsdl:message>
+	<wsdl:message name="invokeStartLoadPlanResponse">
+		<wsdl:part element="odi:OdiStartLoadPlanResponse" name="part1">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="invokeStopLoadPlanResponse">
+		<wsdl:part element="odi:OdiStopLoadPlanResponse" name="part1">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="invokeRestartLoadPlanResponse">
+		<wsdl:part element="odi:OdiRestartLoadPlanResponse" name="part1"/>
+	</wsdl:message>
+	<wsdl:message name="getLoadPlanStatusRequest">
+		<wsdl:part element="odi:OdiGetLoadPlanStatusRequest" name="part1"/>
+	</wsdl:message>
+	<wsdl:message name="getLoadPlanStatusResponse">
+		<wsdl:part element="odi:OdiGetLoadPlanStatusResponse" name="part1"/>
+	</wsdl:message>
+	
+	<wsdl:portType name="requestPortTypeCallback">
+		<wsdl:operation name="invokeStartScenCallback">
+			<wsdl:input message="odi:invokeStartScenCallbackResponse" wsam:Action="xmlns.oracle.com/odi/OdiInvoke/invokeStartScenCallback" wsaw:Action="xmlns.oracle.com/odi/OdiInvoke/invokeStartScenCallback"/>
+		</wsdl:operation>
+		<wsdl:operation name="invokeRestartSessCallback">
+			<wsdl:input message="odi:invokeRestartSessCallbackResponse" wsam:Action="xmlns.oracle.com/odi/OdiInvoke/invokeRestartSessCallback" wsaw:Action="xmlns.oracle.com/odi/OdiInvoke/invokeRestartSessCallback"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:portType name="requestPortType">
+		<wsdl:operation name="invokeStartScen">
+			<wsdl:input message="odi:invokeStartScenRequest" wsam:Action="xmlns.oracle.com/odi/OdiInvoke/invokeStartScen" wsaw:Action="xmlns.oracle.com/odi/OdiInvoke/invokeStartScen"/>
+			<wsdl:output message="odi:invokeStartScenResponse" wsam:Action="xmlns.oracle.com/odi/OdiInvoke/requestPortType/invokeStartScenResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="invokeStartScenWithCallback">
+			<wsdl:input message="odi:invokeStartScenWithCallbackRequest" wsam:Action="xmlns.oracle.com/odi/OdiInvoke/invokeStartScenWithCallback" wsaw:Action="xmlns.oracle.com/odi/OdiInvoke/invokeStartScenWithCallback"/>
+		</wsdl:operation>
+		<wsdl:operation name="getVersion">
+			<wsdl:input message="odi:getWebServiceVersionRequest" wsam:Action="xmlns.oracle.com/odi/OdiInvoke/getVersion" wsaw:Action="xmlns.oracle.com/odi/OdiInvoke/getVersion"/>
+			<wsdl:output message="odi:getWebServiceVersionResponse" wsam:Action="xmlns.oracle.com/odi/OdiInvoke/requestPortType/getVersionResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="invokeRestartSess">
+			<wsdl:input message="odi:invokeRestartSessRequest" wsam:Action="xmlns.oracle.com/odi/OdiInvoke/invokeRestartSess" wsaw:Action="xmlns.oracle.com/odi/OdiInvoke/invokeRestartSess"/>
+			<wsdl:output message="odi:invokeRestartSessResponse" wsam:Action="xmlns.oracle.com/odi/OdiInvoke/requestPortType/invokeRestartSessResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="invokeRestartSessWithCallback">
+			<wsdl:input message="odi:invokeRestartSessWithCallbackRequest" wsam:Action="xmlns.oracle.com/odi/OdiInvoke/invokeRestartSessWithCallback" wsaw:Action="xmlns.oracle.com/odi/OdiInvoke/invokeRestartSessWithCallback"/>
+		</wsdl:operation>
+		<wsdl:operation name="getSessionStatus">
+			<wsdl:input message="odi:getSessionStatusRequest" wsam:Action="xmlns.oracle.com/odi/OdiInvoke/getSessionStatus" wsaw:Action="xmlns.oracle.com/odi/OdiInvoke/getSessionStatus"/>
+			<wsdl:output message="odi:getSessionStatusResponse" wsam:Action="xmlns.oracle.com/odi/OdiInvoke/requestPortType/getSessionStatusResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="invokeStartLoadPlan">
+			<wsdl:input message="odi:InvokeStartLoadPlanRequest" wsam:Action="xmlns.oracle.com/odi/OdiInvoke/invokeStartLoadPlan" wsaw:Action="xmlns.oracle.com/odi/OdiInvoke/invokeStartLoadPlan"/>
+			<wsdl:output message="odi:invokeStartLoadPlanResponse" wsam:Action="xmlns.oracle.com/odi/OdiInvoke/requestPortType/invokeStartLoadPlanResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="invokeStopLoadPlan">
+			<wsdl:input message="odi:InvokeStopLoadPlanRequest" wsam:Action="xmlns.oracle.com/odi/OdiInvoke/invokeStopLoadPlan" wsaw:Action="xmlns.oracle.com/odi/OdiInvoke/invokeStopLoadPlan"/>
+			<wsdl:output message="odi:invokeStopLoadPlanResponse" wsam:Action="xmlns.oracle.com/odi/OdiInvoke/requestPortType/invokeStopLoadPlanResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="invokeRestartLoadPlan">
+			<wsdl:input message="odi:invokeRestartLoadPlanRequest" wsam:Action="xmlns.oracle.com/odi/OdiInvoke/invokeRestartLoadPlan" wsaw:Action="xmlns.oracle.com/odi/OdiInvoke/invokeRestartLoadPlan"/>
+			<wsdl:output message="odi:invokeRestartLoadPlanResponse" wsam:Action="xmlns.oracle.com/odi/OdiInvoke/requestPortType/invokeRestartLoadPlanResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getLoadPlanStatus">
+			<wsdl:input message="odi:getLoadPlanStatusRequest" wsam:Action="xmlns.oracle.com/odi/OdiInvoke/getLoadPlanStatus" wsaw:Action="xmlns.oracle.com/odi/OdiInvoke/getLoadPlanStatus"/>
+			<wsdl:output message="odi:getLoadPlanStatusResponse" wsam:Action="xmlns.oracle.com/odi/OdiInvoke/requestPortType/getLoadPlanStatusResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	
+	<wsdl:binding name="InvokeRequestSOAP11Binding" type="odi:requestPortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsaw:UsingAddressing wsdl:required="false"/>
+		<wsdl:operation name="invokeStartScen">
+			<soap:operation soapAction="xmlns.oracle.com/odi/OdiInvoke/invokeStartScen"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="invokeStartScenWithCallback">
+			<soap:operation soapAction="xmlns.oracle.com/odi/OdiInvoke/invokeStartScenWithCallback"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+		</wsdl:operation>
+		<wsdl:operation name="getSessionStatus">
+			<soap:operation soapAction="xmlns.oracle.com/odi/OdiInvoke/getSessionStatus"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getVersion">
+			<soap:operation soapAction="xmlns.oracle.com/odi/OdiInvoke/getVersion"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="invokeRestartSess">
+			<soap:operation soapAction="xmlns.oracle.com/odi/OdiInvoke/invokeRestartSess"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="invokeRestartSessWithCallback">
+			<soap:operation soapAction="xmlns.oracle.com/odi/OdiInvoke/invokeRestartSessWithCallback"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+		</wsdl:operation>
+		<wsdl:operation name="invokeStartLoadPlan">
+			<soap:operation soapAction="xmlns.oracle.com/odi/OdiInvoke/invokeStartLoadPlan"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="invokeStopLoadPlan">
+			<soap:operation soapAction="xmlns.oracle.com/odi/OdiInvoke/invokeStopLoadPlan"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="invokeRestartLoadPlan">
+			<soap:operation soapAction="xmlns.oracle.com/odi/OdiInvoke/invokeRestartLoadPlan"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getLoadPlanStatus">
+			<soap:operation soapAction="xmlns.oracle.com/odi/OdiInvoke/getLoadPlanStatus"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="InvokeCallbackSOAP11Binding" type="odi:requestPortTypeCallback">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsaw:UsingAddressing wsdl:required="false"/>
+		<wsdl:operation name="invokeRestartSessCallback">
+			<soap:operation soapAction="xmlns.oracle.com/odi/OdiInvoke/invokeRestartSessCallback"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+		</wsdl:operation>
+		<wsdl:operation name="invokeStartScenCallback">
+			<soap:operation soapAction="xmlns.oracle.com/odi/OdiInvoke/invokeStartScenCallback"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="OdiInvoke">
+		<wsdl:port binding="odi:InvokeRequestSOAP11Binding" name="OdiInvokeRequestSOAP11port0">
+			<soap:address location="http://localhost:8080/JerseyRest/services/OdiInvokeRequestSOAP11port0"/>
+		</wsdl:port>
+	</wsdl:service>
+	<wsdl:service name="OdiInvokeCallback">
+		<wsdl:port binding="odi:InvokeCallbackSOAP11Binding" name="OdiInvokeCallbackSOAP11Port">
+			<soap:address location="http://localhost:8080/JerseyRest/services/OdiInvokeCallbackSOAP11Port"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
