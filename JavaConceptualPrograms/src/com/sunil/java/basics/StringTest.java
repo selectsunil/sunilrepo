@@ -4,8 +4,8 @@ public class StringTest
 	public static void main(String[] args) 
 	{
 		
+		String id="234";
 		
-		
-		System.out.println("Hello World!");
+	
 	}
 }
