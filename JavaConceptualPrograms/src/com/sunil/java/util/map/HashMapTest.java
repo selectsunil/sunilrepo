@@ -2,6 +2,8 @@ package com.sunil.java.util.map;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.Set;
 
 public class HashMapTest {
 
@@ -14,9 +16,20 @@ public class HashMapTest {
 		hm.put("102", "sunil");
 		hm.put("102", "sunil");
 		
+		//iterating map:  procedure 1
+		System.out.println("1. iterating map:  using keySet and get Method");
 		for(String s:hm.keySet())
 		{
 			System.out.println(s+" "+hm.get(s));
+		}
+		
+		//iterating map:  procedure 2
+		System.out.println("2. iterating map: using entrySet");
+		Set<Entry<String, String>> entySet =hm.entrySet();
+		for(Entry<String, String> e:entySet){
+			
+			System.out.println(e.getKey()+" "+e.getValue());
+			
 		}
 
 	
