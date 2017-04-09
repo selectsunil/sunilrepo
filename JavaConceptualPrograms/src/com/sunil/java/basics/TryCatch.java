@@ -8,7 +8,7 @@ public class TryCatch {
 
 	public static void main(String[] args) {
 		
-		//Can we try without catch
+		//Can we write try without catch
 				
 				try{
 					

@@ -45,8 +45,8 @@ public class ConstructorTest extends  ConstructorTestBase
 	public static void main(String[] args) 
 	{
 		
-		//ConstructorTest ct=new ConstructorTest(5,2);
-		ConstructorTest ct=new ConstructorTest();
+		ConstructorTest ct=new ConstructorTest(5,2);
+		//ConstructorTest ct=new ConstructorTest();
 		//System.out.println("constructor is called explicitly from the instance variable"+ct.ConstructorTest());
 	}
 }
