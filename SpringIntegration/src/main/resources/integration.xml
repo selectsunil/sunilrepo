@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:int-http="http://www.springframework.org/schema/integration/http"
+	xmlns:int-mail="http://www.springframework.org/schema/integration/mail"
+	xmlns:stream="http://www.springframework.org/schema/integration/stream"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/integration
+    http://www.springframework.org/schema/integration/spring-integration.xsd
+    http://www.springframework.org/schema/integration/http
+    http://www.springframework.org/schema/integration/http/spring-integration-http.xsd
+    http://www.springframework.org/schema/integration/mail
+    http://www.springframework.org/schema/integration/mail/spring-integration-mail.xsd
+    http://www.springframework.org/schema/integration/stream
+	http://www.springframework.org/schema/integration/stream/spring-integration-stream.xsd">
+
+	<!-- CHANNEL -->
+	<int:channel id="requestChannel" />
+	<int:channel id="outputChannel" />
+	<int:channel id="emailTransInChannel"></int:channel>
+	<int:channel id="emailTransOutChannel"></int:channel>
+	<int:channel id="stringinChannel"></int:channel>
+	<int:channel id="logChannel" />
+	
+   
+	<!-- Send Email -->
+	<int-mail:outbound-channel-adapter channel="emailTransOutChannel" mail-sender="mailSender"/>
+	
+	<int-mail:header-enricher input-channel="errorChannel" output-channel="emailTransOutChannel" >
+		<int-mail:subject value="You Have Mail"/>
+		<int-mail:to value="spradhan007@gmail.com"/>
+		<int-mail:cc value="spradhan007@gmail.com"/>
+		<!-- <int-mail:bcc value="bcc@example.org"/>
+		<int-mail:from value="from@example.org"/>
+		<int-mail:reply-to value="replyTo@example.org" /> -->
+	</int-mail:header-enricher>
+		
+	
+		
+	<bean id="mailSender" 
+    	class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+                <prop key="mail.smtp.host">smtp.gmail.com</prop>
+                <prop key="mail.smtp.port">587</prop>
+            </props>
+        </property>
+        <property name="username" value="spradhan007@gmail.com" />
+        <property name="password" value="Sribatsa@123" />
+    </bean>
+
+	<int:recipient-list-router input-channel="requestChannel">
+			<int:recipient channel="stringinChannel"/>
+  			<int:recipient channel="emailTransInChannel"/>
+	</int:recipient-list-router>
+	
+	<!-- <stream:stderr-channel-adapter channel="errorChannel" append-newline="true" />
+     -->
+	<int-http:inbound-gateway request-channel="requestChannel"
+		reply-channel="outputChannel" supported-methods="GET"
+		path="/welcome/{name}" payload-expression="#pathVariables.name">
+
+		<int-http:request-mapping consumes="application/json" produces="application/json" />
+	</int-http:inbound-gateway>
+	
+	<int:chain input-channel="stringinChannel" output-channel="outputChannel">
+	    <int:header-enricher>
+	        <int:error-channel ref="errorChannel" />
+	    </int:header-enricher>
+	    <int:service-activator ref="welcomeEndpoint" method="get"   />
+	</int:chain>
+
+	<!-- <int:service-activator ref="welcomeEndpoint" method="get" input-channel="stringinChannel" output-channel="outputChannel" />
+ -->
+</beans>
